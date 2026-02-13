@@ -2,6 +2,12 @@ const redis = require("../config/redis");
 
 const checkIdempotency = async (key) => {
   //Implement your code here
+   const cached = await redis.get(`idem:${key}`);
+
+  if (!cached) {
+    return null; 
+  }
+  return JSON.parse(cached);
 };
 
 const storeResponse = async (key, response) => {

@@ -11,7 +11,9 @@ router.post("/", async (req, res) => {
 
   
   //Write your code here to Return json with { error: "Idempotency-Key required" } and status 400
-
+  if (!key) {
+    return res.status(400).json({ error: "Idempotency-Key required" });
+  }
   const existing = await checkIdempotency(key);
   if (existing) return res.json(existing);
 

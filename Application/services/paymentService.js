@@ -8,13 +8,18 @@ const {
 const mockPayment = async () => {
   const random = Math.random();
 
-  if (WRITE YOUR CODE HERE) 
-  throw new Error("Payment Failed");
-  if (WRITE YOUR CODE HERE) {
+  // 30% FAILURE
+  if (random < 0.3) {
+    throw new Error("Payment Failed");
+  }
+
+  // 20% TIMEOUT
+  if (random < 0.5) {
     await new Promise((res) => setTimeout(res, 4000));
     throw new Error("Payment Timeout");
   }
 
+  // 50% SUCCESS
   return { success: true };
 };
 

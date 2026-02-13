@@ -27,14 +27,15 @@ const incrementFailures = async () => {
   }
 };
 
+// 
 const canExecute = async () => {
   const state = await getState();
 
   //FIX THE BUG IN FOLLOWING CODE
-  if (state === "HALF_OPEN") {
-    const cooldownUntil = await redis.get("payment:cooldown");
+  if (state === "OPEN") {
+    const cooldownUntil = parseInt(await redis.get("payment:cooldown")) || 0;
     if (Date.now() > cooldownUntil) {
-      await setState("OPEN");
+      await setState("HALF_OPEN");
       return true;
     }
     return false;
